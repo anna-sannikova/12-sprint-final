@@ -1,0 +1,65 @@
+name: Go App CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'  # Запуск при добавлении любого тега
+  pull_request:
+    branches:
+      - main  # Тесты при PR в ветку main
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21.x'
+
+      - name: Install dependencies
+        run: go mod download
+
+      - name: Lint & format check
+        run: |
+          go fmt ./...
+          go vet ./...
+
+      - name: Run tests (including parcel_test.go)
+        run: go test -v ./...  # parcel_test.go будет автоматически включён
+        # Если тесты находятся в конкретном пакете, замените на: go test -v ./path/to/package
+
+  publish-to-dockerhub:
+    needs: test-and-lint  # Зависит от успешного завершения тестов
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')  # Выполняется только при наличии тега
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_kholevitskayaana }}  # Секретный ключ DOCKER_USERNAME
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Секретный ключ DOCKER_PASSWORD
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          repository: kholevitskayaanna/11-sprint-final  # Docker ID + имя репозитория
+          tags: ${{ github.ref_name }}  # Используем имя тега из GitHub
+          # Пример: kholevitskayaanna/11-sprint-final:v1.0
+
+      - name: Print success message
+        run: echo "Docker image published: kholevitskayaanna/11-sprint-final:${{ github.ref_name }}"
