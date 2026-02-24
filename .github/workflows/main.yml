@@ -62,4 +62,6 @@ jobs:
           # Пример: kholevitskayaanna/11-sprint-final:v1.0
 
       - name: Print success message
-        run: echo "Docker image published: kholevitskayaanna/11-sprint-final:${{ github.ref_name }}"
+        run: |
+          echo "Docker image published: kholevitskayaanna/11-sprint-final"
+          echo "Tag: ${{ github.ref_name }}"
