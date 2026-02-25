@@ -37,7 +37,7 @@ jobs:
   publish-to-dockerhub:
     needs: test-and-lint  # Зависит от успешного завершения тестов
     runs-on: ubuntu-latest
-    # if: startsWith(github.ref, 'refs/tags/')   Выполняется только при наличии тега
+    if: startsWith(github.ref, 'refs/tags/')   Выполняется только при наличии тега
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
