@@ -32,7 +32,7 @@ jobs:
 
       - name: Run tests (including parcel_test.go)
         run: go test -v ./...  # parcel_test.go будет автоматически включён
-        # Если тесты находятся в конкретном пакете, замените на: go test -v ./path/to/package
+       
 
   publish-to-dockerhub:
     needs: test-and-lint  # Зависит от успешного завершения тестов
