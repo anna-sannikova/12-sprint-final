@@ -57,11 +57,11 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          repository: kholevitskayaanna/11-sprint-final  # Docker ID + имя репозитория
+          repository: kholevitskayaanna/12-sprint-final  # Docker ID + имя репозитория
           tags: ${{ github.ref_name }}  # Используем имя тега из GitHub
           # Пример: kholevitskayaanna/11-sprint-final:v1.0
 
       - name: Print success message
         run: |
-          echo "Docker image published: kholevitskayaanna/11-sprint-final"
+          echo "Docker image published: kholevitskayaanna/12-sprint-final"
           echo "Tag: ${{ github.ref_name }}"
