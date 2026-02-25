@@ -57,9 +57,9 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: true
           repository: kholevitskayaanna/12-sprint-final  # Docker ID + имя репозитория
           tags: ${{ github.ref_name }}  # Используем имя тега из GitHub
+          push: true
       
       - name: Debug Image Name  # <-- Вставляем этот шаг
         run: |
