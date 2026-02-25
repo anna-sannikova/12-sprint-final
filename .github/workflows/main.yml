@@ -59,7 +59,7 @@ jobs:
           push: true
           repository: kholevitskayaanna/12-sprint-final  # Docker ID + имя репозитория
           tags: ${{ github.ref_name }}  # Используем имя тега из GitHub
-          # Пример: kholevitskayaanna/11-sprint-final:v1.0
+         
 
       - name: Print success message
         run: |
