@@ -52,6 +52,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}  # Секретный ключ DOCKER_PASSWORD
 
       - name: Build and push Docker image
+        id: buildx
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -59,7 +60,10 @@ jobs:
           push: true
           repository: kholevitskayaanna/12-sprint-final  # Docker ID + имя репозитория
           tags: ${{ github.ref_name }}  # Используем имя тега из GitHub
-         
+      
+      - name: Debug Image Name  # <-- Вставляем этот шаг
+        run: |
+          echo "Pushing image: ${{ steps.buildx.outputs.fullyQualifiedImage }}"  
 
       - name: Print success message
         run: |
