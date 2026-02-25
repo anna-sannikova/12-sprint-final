@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Собираем бинарный файл
-RUN go build -o /app/11sprint .
+RUN go build -o /app/12-sprint-final .
 
 # Этап финального минимального образа
 FROM alpine:latest
@@ -21,10 +21,10 @@ FROM alpine:latest
 WORKDIR /root/
 
 # Копируем бинарный файл из этапа сборки
-COPY --from=builder /app/11sprint ./
+COPY --from=builder /app/12-sprint-final ./
 
 # Копируем файл базы данных (tracker.db)
 COPY tracker.db ./
 
 # Запускаем приложение
-CMD ["./11sprint"]
+CMD ["./12-sprint-final"]
